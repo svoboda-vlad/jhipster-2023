@@ -1,0 +1,64 @@
+{
+  "applications": "*",
+  "changelogDate": "20221228190943",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "photo",
+  "fields": [
+    {
+      "fieldName": "fileName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fileSize",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "width",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "height",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "creationDateTime",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Photo",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "ownerSide": true,
+      "relationshipName": "owner",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "comment",
+      "otherEntityRelationshipName": "photo",
+      "relationshipName": "comment",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "albumPhotoRel",
+      "otherEntityRelationshipName": "photo",
+      "relationshipName": "albumPhotoRel",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}

@@ -48,6 +48,13 @@ public class CacheConfiguration {
             createCache(cm, svobodavlad.domain.User.class.getName());
             createCache(cm, svobodavlad.domain.Authority.class.getName());
             createCache(cm, svobodavlad.domain.User.class.getName() + ".authorities");
+            createCache(cm, svobodavlad.domain.Album.class.getName());
+            createCache(cm, svobodavlad.domain.Album.class.getName() + ".albumPhotoRels");
+            createCache(cm, svobodavlad.domain.Photo.class.getName());
+            createCache(cm, svobodavlad.domain.Photo.class.getName() + ".comments");
+            createCache(cm, svobodavlad.domain.Photo.class.getName() + ".albumPhotoRels");
+            createCache(cm, svobodavlad.domain.Comment.class.getName());
+            createCache(cm, svobodavlad.domain.AlbumPhotoRel.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,0 +1,36 @@
+entity Album {
+	albumName String required
+}
+
+entity Photo {
+	fileName String required,
+    fileSize BigDecimal required,
+    width Integer required,
+    height Integer required,    
+    creationDateTime Instant required,    
+    description String
+}
+
+entity Comment {
+	commentText String required
+}
+
+entity AlbumPhotoRel {}
+
+relationship OneToMany {
+	Photo to Comment,
+    Album to AlbumPhotoRel,
+    Photo to AlbumPhotoRel
+}
+
+relationship OneToOne {
+	Album{owner} to User,
+    Photo{owner} to User,
+    Comment{author} to User
+}
+
+paginate all with pagination
+
+dto * with mapstruct
+
+service all with serviceClass

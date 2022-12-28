@@ -1,0 +1,28 @@
+{
+  "applications": "*",
+  "changelogDate": "20221228190945",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "album_photo_rel",
+  "fields": [],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AlbumPhotoRel",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "album",
+      "otherEntityRelationshipName": "albumPhotoRel",
+      "relationshipName": "album",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "photo",
+      "otherEntityRelationshipName": "albumPhotoRel",
+      "relationshipName": "photo",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}
