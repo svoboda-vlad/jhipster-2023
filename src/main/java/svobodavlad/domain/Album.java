@@ -16,6 +16,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "album")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@NamedEntityGraph(name = "Album.detail", attributeNodes = { @NamedAttributeNode("albumPhotoRels"), @NamedAttributeNode("owner") })
+@NamedEntityGraph(name = "Album.noDetail", attributeNodes = { @NamedAttributeNode("owner") })
 public class Album implements Serializable {
 
     private static final long serialVersionUID = 1L;

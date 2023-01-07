@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import svobodavlad.repository.AlbumRepository;
 import svobodavlad.service.AlbumService;
 import svobodavlad.service.dto.AlbumDTO;
+import svobodavlad.service.dto.AlbumDetailDTO;
 import svobodavlad.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -159,10 +160,10 @@ public class AlbumResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the albumDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/albums/{id}")
-    public ResponseEntity<AlbumDTO> getAlbum(@PathVariable Long id) {
+    public ResponseEntity<AlbumDetailDTO> getAlbum(@PathVariable Long id) {
         log.debug("REST request to get Album : {}", id);
-        Optional<AlbumDTO> albumDTO = albumService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(albumDTO);
+        Optional<AlbumDetailDTO> albumDetailDTO = albumService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(albumDetailDTO);
     }
 
     /**

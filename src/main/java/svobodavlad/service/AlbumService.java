@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import svobodavlad.domain.Album;
 import svobodavlad.repository.AlbumRepository;
 import svobodavlad.service.dto.AlbumDTO;
+import svobodavlad.service.dto.AlbumDetailDTO;
+import svobodavlad.service.mapper.AlbumDetailMapper;
 import svobodavlad.service.mapper.AlbumMapper;
 
 /**
@@ -25,9 +27,12 @@ public class AlbumService {
 
     private final AlbumMapper albumMapper;
 
-    public AlbumService(AlbumRepository albumRepository, AlbumMapper albumMapper) {
+    private final AlbumDetailMapper albumDetailMapper;
+
+    public AlbumService(AlbumRepository albumRepository, AlbumMapper albumMapper, AlbumDetailMapper albumDetailMapper) {
         this.albumRepository = albumRepository;
         this.albumMapper = albumMapper;
+        this.albumDetailMapper = albumDetailMapper;
     }
 
     /**
@@ -95,9 +100,9 @@ public class AlbumService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<AlbumDTO> findOne(Long id) {
+    public Optional<AlbumDetailDTO> findOne(Long id) {
         log.debug("Request to get Album : {}", id);
-        return albumRepository.findById(id).map(albumMapper::toDto);
+        return albumRepository.findById(id).map(albumDetailMapper::toDto);
     }
 
     /**

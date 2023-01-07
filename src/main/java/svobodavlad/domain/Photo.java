@@ -18,6 +18,11 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "photo")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@NamedEntityGraph(
+    name = "Photo.detail",
+    attributeNodes = { @NamedAttributeNode("comments"), @NamedAttributeNode("owner"), @NamedAttributeNode("albumPhotoRels") }
+)
+@NamedEntityGraph(name = "Photo.noDetail", attributeNodes = { @NamedAttributeNode("owner") })
 public class Photo implements Serializable {
 
     private static final long serialVersionUID = 1L;

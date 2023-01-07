@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import svobodavlad.repository.PhotoRepository;
 import svobodavlad.service.PhotoService;
 import svobodavlad.service.dto.PhotoDTO;
+import svobodavlad.service.dto.PhotoDetailDTO;
 import svobodavlad.web.rest.errors.BadRequestAlertException;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -159,10 +160,10 @@ public class PhotoResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the photoDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/photos/{id}")
-    public ResponseEntity<PhotoDTO> getPhoto(@PathVariable Long id) {
+    public ResponseEntity<PhotoDetailDTO> getPhoto(@PathVariable Long id) {
         log.debug("REST request to get Photo : {}", id);
-        Optional<PhotoDTO> photoDTO = photoService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(photoDTO);
+        Optional<PhotoDetailDTO> photoDetailDTO = photoService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(photoDetailDTO);
     }
 
     /**

@@ -18,12 +18,12 @@ public interface AlbumPhotoRelMapper extends EntityMapper<AlbumPhotoRelDTO, Albu
     AlbumPhotoRelDTO toDto(AlbumPhotoRel s);
 
     @Named("albumId")
-    @BeanMapping(ignoreByDefault = true)
+    //@BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     AlbumDTO toDtoAlbumId(Album album);
 
     @Named("photoId")
-    @BeanMapping(ignoreByDefault = true)
+    //@BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     PhotoDTO toDtoPhotoId(Photo photo);
 }

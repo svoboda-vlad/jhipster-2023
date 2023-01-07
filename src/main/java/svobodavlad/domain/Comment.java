@@ -14,6 +14,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "comment")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@NamedEntityGraph(name = "Comment.detail", attributeNodes = { @NamedAttributeNode("author"), @NamedAttributeNode("photo") })
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -23,7 +23,7 @@ public interface CommentMapper extends EntityMapper<CommentDTO, Comment> {
     UserDTO toDtoUserId(User user);
 
     @Named("photoId")
-    @BeanMapping(ignoreByDefault = true)
+    //@BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     PhotoDTO toDtoPhotoId(Photo photo);
 }

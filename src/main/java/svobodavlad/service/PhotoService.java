@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import svobodavlad.domain.Photo;
 import svobodavlad.repository.PhotoRepository;
 import svobodavlad.service.dto.PhotoDTO;
+import svobodavlad.service.dto.PhotoDetailDTO;
+import svobodavlad.service.mapper.PhotoDetailMapper;
 import svobodavlad.service.mapper.PhotoMapper;
 
 /**
@@ -24,10 +26,12 @@ public class PhotoService {
     private final PhotoRepository photoRepository;
 
     private final PhotoMapper photoMapper;
+    private final PhotoDetailMapper photoDetailMapper;
 
-    public PhotoService(PhotoRepository photoRepository, PhotoMapper photoMapper) {
+    public PhotoService(PhotoRepository photoRepository, PhotoMapper photoMapper, PhotoDetailMapper photoDetailMapper) {
         this.photoRepository = photoRepository;
         this.photoMapper = photoMapper;
+        this.photoDetailMapper = photoDetailMapper;
     }
 
     /**
@@ -95,9 +99,9 @@ public class PhotoService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<PhotoDTO> findOne(Long id) {
+    public Optional<PhotoDetailDTO> findOne(Long id) {
         log.debug("Request to get Photo : {}", id);
-        return photoRepository.findById(id).map(photoMapper::toDto);
+        return photoRepository.findById(id).map(photoDetailMapper::toDto);
     }
 
     /**
