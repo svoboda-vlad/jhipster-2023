@@ -974,6 +974,11 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <image>
+                                <name>svobodavlad/${project.artifactId}:${project.version}</name>
+                            </image>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>io.github.git-commit-id</groupId>
