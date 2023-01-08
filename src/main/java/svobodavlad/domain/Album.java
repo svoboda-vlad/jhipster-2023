@@ -30,14 +30,13 @@ public class Album implements Serializable {
     @Column(name = "album_name", nullable = false)
     private String albumName;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private User owner;
-
     @OneToMany(mappedBy = "album")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "album", "photo" }, allowSetters = true)
     private Set<AlbumPhotoRel> albumPhotoRels = new HashSet<>();
+
+    @ManyToOne
+    private User owner;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -65,19 +64,6 @@ public class Album implements Serializable {
 
     public void setAlbumName(String albumName) {
         this.albumName = albumName;
-    }
-
-    public User getOwner() {
-        return this.owner;
-    }
-
-    public void setOwner(User user) {
-        this.owner = user;
-    }
-
-    public Album owner(User user) {
-        this.setOwner(user);
-        return this;
     }
 
     public Set<AlbumPhotoRel> getAlbumPhotoRels() {
@@ -108,6 +94,19 @@ public class Album implements Serializable {
     public Album removeAlbumPhotoRel(AlbumPhotoRel albumPhotoRel) {
         this.albumPhotoRels.remove(albumPhotoRel);
         albumPhotoRel.setAlbum(null);
+        return this;
+    }
+
+    public User getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(User user) {
+        this.owner = user;
+    }
+
+    public Album owner(User user) {
+        this.setOwner(user);
         return this;
     }
 

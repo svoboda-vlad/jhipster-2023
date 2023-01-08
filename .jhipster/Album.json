@@ -18,16 +18,15 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "user",
-      "ownerSide": true,
-      "relationshipName": "owner",
-      "relationshipType": "one-to-one"
-    },
-    {
       "otherEntityName": "albumPhotoRel",
       "otherEntityRelationshipName": "album",
       "relationshipName": "albumPhotoRel",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "user",
+      "relationshipName": "owner",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceClass"

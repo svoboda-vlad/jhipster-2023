@@ -19,9 +19,8 @@
   "relationships": [
     {
       "otherEntityName": "user",
-      "ownerSide": true,
       "relationshipName": "author",
-      "relationshipType": "one-to-one"
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "photo",

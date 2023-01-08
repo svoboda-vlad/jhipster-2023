@@ -18,7 +18,7 @@
                 <constraints nullable="false" />
             </column>
             <column name="owner_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_album__owner_id" />
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

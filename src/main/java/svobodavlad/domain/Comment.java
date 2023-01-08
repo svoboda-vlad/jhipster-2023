@@ -28,12 +28,11 @@ public class Comment implements Serializable {
     @Column(name = "comment_text", nullable = false)
     private String commentText;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private User author;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "owner", "comments", "albumPhotoRels" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "comments", "albumPhotoRels", "owner" }, allowSetters = true)
     private Photo photo;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
