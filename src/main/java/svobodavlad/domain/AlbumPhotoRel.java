@@ -24,11 +24,11 @@ public class AlbumPhotoRel implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "owner", "albumPhotoRels" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "albumPhotoRels", "owner" }, allowSetters = true)
     private Album album;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "owner", "comments", "albumPhotoRels" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "comments", "albumPhotoRels", "owner" }, allowSetters = true)
     private Photo photo;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -6,8 +6,8 @@ entity Photo {
 	fileName String required,
     fileSize BigDecimal required,
     width Integer required,
-    height Integer required,    
-    creationDateTime Instant required,    
+    height Integer required,
+    creationDateTime Instant required,
     description String
 }
 
@@ -23,7 +23,7 @@ relationship OneToMany {
     Photo to AlbumPhotoRel
 }
 
-relationship OneToOne {
+relationship ManyToOne {
 	Album{owner} to User,
     Photo{owner} to User,
     Comment{author} to User

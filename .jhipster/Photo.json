@@ -42,12 +42,6 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "user",
-      "ownerSide": true,
-      "relationshipName": "owner",
-      "relationshipType": "one-to-one"
-    },
-    {
       "otherEntityName": "comment",
       "otherEntityRelationshipName": "photo",
       "relationshipName": "comment",
@@ -58,6 +52,11 @@
       "otherEntityRelationshipName": "photo",
       "relationshipName": "albumPhotoRel",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "user",
+      "relationshipName": "owner",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceClass"
