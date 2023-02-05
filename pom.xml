@@ -976,7 +976,7 @@
                         </executions>
                         <configuration>
                             <image>
-                                <name>svobodavlad/${project.artifactId}:${project.version}</name>
+                                <name>svobodavlad/library/${project.artifactId}:${project.version}</name>
                             </image>
                         </configuration>
                     </plugin>
