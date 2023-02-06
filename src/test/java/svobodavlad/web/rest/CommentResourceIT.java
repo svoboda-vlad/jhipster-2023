@@ -61,7 +61,8 @@ class CommentResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Comment createEntity(EntityManager em) {
-        Comment comment = new Comment().commentText(DEFAULT_COMMENT_TEXT);
+        Comment comment = new Comment();
+        comment.setCommentText(DEFAULT_COMMENT_TEXT);
         return comment;
     }
 
@@ -72,7 +73,8 @@ class CommentResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Comment createUpdatedEntity(EntityManager em) {
-        Comment comment = new Comment().commentText(UPDATED_COMMENT_TEXT);
+        Comment comment = new Comment();
+        comment.setCommentText(UPDATED_COMMENT_TEXT);
         return comment;
     }
 
@@ -184,7 +186,7 @@ class CommentResourceIT {
         Comment updatedComment = commentRepository.findById(comment.getId()).get();
         // Disconnect from session so that the updates on updatedComment are not directly saved in db
         em.detach(updatedComment);
-        updatedComment.commentText(UPDATED_COMMENT_TEXT);
+        updatedComment.setCommentText(UPDATED_COMMENT_TEXT);
         CommentDTO commentDTO = commentMapper.toDto(updatedComment);
 
         restCommentMockMvc
@@ -279,7 +281,7 @@ class CommentResourceIT {
         Comment partialUpdatedComment = new Comment();
         partialUpdatedComment.setId(comment.getId());
 
-        partialUpdatedComment.commentText(UPDATED_COMMENT_TEXT);
+        partialUpdatedComment.setCommentText(UPDATED_COMMENT_TEXT);
 
         restCommentMockMvc
             .perform(
@@ -308,7 +310,7 @@ class CommentResourceIT {
         Comment partialUpdatedComment = new Comment();
         partialUpdatedComment.setId(comment.getId());
 
-        partialUpdatedComment.commentText(UPDATED_COMMENT_TEXT);
+        partialUpdatedComment.setCommentText(UPDATED_COMMENT_TEXT);
 
         restCommentMockMvc
             .perform(

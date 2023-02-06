@@ -1,6 +1,7 @@
 package svobodavlad.service;
 
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import svobodavlad.service.mapper.AlbumMapper;
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AlbumService {
 
     private final Logger log = LoggerFactory.getLogger(AlbumService.class);
@@ -24,11 +26,6 @@ public class AlbumService {
     private final AlbumRepository albumRepository;
 
     private final AlbumMapper albumMapper;
-
-    public AlbumService(AlbumRepository albumRepository, AlbumMapper albumMapper) {
-        this.albumRepository = albumRepository;
-        this.albumMapper = albumMapper;
-    }
 
     /**
      * Save a album.

@@ -1,6 +1,7 @@
 package svobodavlad.service;
 
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import svobodavlad.service.mapper.CommentMapper;
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CommentService {
 
     private final Logger log = LoggerFactory.getLogger(CommentService.class);
@@ -24,11 +26,6 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     private final CommentMapper commentMapper;
-
-    public CommentService(CommentRepository commentRepository, CommentMapper commentMapper) {
-        this.commentRepository = commentRepository;
-        this.commentMapper = commentMapper;
-    }
 
     /**
      * Save a comment.

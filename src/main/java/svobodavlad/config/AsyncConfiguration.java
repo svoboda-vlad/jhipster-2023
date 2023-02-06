@@ -1,6 +1,7 @@
 package svobodavlad.config;
 
 import java.util.concurrent.Executor;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
@@ -19,15 +20,12 @@ import tech.jhipster.async.ExceptionHandlingAsyncTaskExecutor;
 @EnableAsync
 @EnableScheduling
 @Profile("!testdev & !testprod")
+@RequiredArgsConstructor
 public class AsyncConfiguration implements AsyncConfigurer {
 
     private final Logger log = LoggerFactory.getLogger(AsyncConfiguration.class);
 
     private final TaskExecutionProperties taskExecutionProperties;
-
-    public AsyncConfiguration(TaskExecutionProperties taskExecutionProperties) {
-        this.taskExecutionProperties = taskExecutionProperties;
-    }
 
     @Override
     @Bean(name = "taskExecutor")

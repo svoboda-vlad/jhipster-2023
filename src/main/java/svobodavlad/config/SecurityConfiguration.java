@@ -1,5 +1,6 @@
 package svobodavlad.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,7 @@ import tech.jhipster.config.JHipsterProperties;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
+@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final JHipsterProperties jHipsterProperties;
@@ -28,18 +30,6 @@ public class SecurityConfiguration {
 
     private final CorsFilter corsFilter;
     private final SecurityProblemSupport problemSupport;
-
-    public SecurityConfiguration(
-        TokenProvider tokenProvider,
-        CorsFilter corsFilter,
-        JHipsterProperties jHipsterProperties,
-        SecurityProblemSupport problemSupport
-    ) {
-        this.tokenProvider = tokenProvider;
-        this.corsFilter = corsFilter;
-        this.problemSupport = problemSupport;
-        this.jHipsterProperties = jHipsterProperties;
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

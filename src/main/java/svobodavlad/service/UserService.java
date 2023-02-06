@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -29,6 +30,7 @@ import tech.jhipster.security.RandomUtil;
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
@@ -40,18 +42,6 @@ public class UserService {
     private final AuthorityRepository authorityRepository;
 
     private final CacheManager cacheManager;
-
-    public UserService(
-        UserRepository userRepository,
-        PasswordEncoder passwordEncoder,
-        AuthorityRepository authorityRepository,
-        CacheManager cacheManager
-    ) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authorityRepository = authorityRepository;
-        this.cacheManager = cacheManager;
-    }
 
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);

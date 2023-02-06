@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -16,6 +17,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "album")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Album implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,51 +45,6 @@ public class Album implements Serializable {
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public Album id(Long id) {
-        this.setId(id);
-        return this;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getAlbumName() {
-        return this.albumName;
-    }
-
-    public Album albumName(String albumName) {
-        this.setAlbumName(albumName);
-        return this;
-    }
-
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
-    }
-
-    public Set<AlbumPhotoRel> getAlbumPhotoRels() {
-        return this.albumPhotoRels;
-    }
-
-    public void setAlbumPhotoRels(Set<AlbumPhotoRel> albumPhotoRels) {
-        if (this.albumPhotoRels != null) {
-            this.albumPhotoRels.forEach(i -> i.setAlbum(null));
-        }
-        if (albumPhotoRels != null) {
-            albumPhotoRels.forEach(i -> i.setAlbum(this));
-        }
-        this.albumPhotoRels = albumPhotoRels;
-    }
-
-    public Album albumPhotoRels(Set<AlbumPhotoRel> albumPhotoRels) {
-        this.setAlbumPhotoRels(albumPhotoRels);
-        return this;
-    }
-
     public Album addAlbumPhotoRel(AlbumPhotoRel albumPhotoRel) {
         this.albumPhotoRels.add(albumPhotoRel);
         albumPhotoRel.setAlbum(this);
@@ -94,19 +54,6 @@ public class Album implements Serializable {
     public Album removeAlbumPhotoRel(AlbumPhotoRel albumPhotoRel) {
         this.albumPhotoRels.remove(albumPhotoRel);
         albumPhotoRel.setAlbum(null);
-        return this;
-    }
-
-    public User getOwner() {
-        return this.owner;
-    }
-
-    public void setOwner(User user) {
-        this.owner = user;
-    }
-
-    public Album owner(User user) {
-        this.setOwner(user);
         return this;
     }
 
@@ -127,14 +74,5 @@ public class Album implements Serializable {
     public int hashCode() {
         // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "Album{" +
-            "id=" + getId() +
-            ", albumName='" + getAlbumName() + "'" +
-            "}";
     }
 }

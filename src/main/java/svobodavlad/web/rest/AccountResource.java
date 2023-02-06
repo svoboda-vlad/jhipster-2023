@@ -3,6 +3,7 @@ package svobodavlad.web.rest;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ import svobodavlad.web.rest.vm.ManagedUserVM;
  */
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class AccountResource {
 
     private static class AccountResourceException extends RuntimeException {
@@ -40,12 +42,6 @@ public class AccountResource {
     private final UserService userService;
 
     private final MailService mailService;
-
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
-        this.userRepository = userRepository;
-        this.userService = userService;
-        this.mailService = mailService;
-    }
 
     /**
      * {@code POST  /register} : register the user.

@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.Collections;
 import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,6 +59,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/admin")
+@RequiredArgsConstructor
 public class UserResource {
 
     private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
@@ -86,12 +88,6 @@ public class UserResource {
     private final UserRepository userRepository;
 
     private final MailService mailService;
-
-    public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
-        this.userService = userService;
-        this.userRepository = userRepository;
-        this.mailService = mailService;
-    }
 
     /**
      * {@code POST  /admin/users}  : Creates a new user.
