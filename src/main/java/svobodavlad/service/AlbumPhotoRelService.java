@@ -1,80 +1,37 @@
 package svobodavlad.service;
 
 import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import svobodavlad.domain.AlbumPhotoRel;
-import svobodavlad.repository.AlbumPhotoRelRepository;
 import svobodavlad.service.dto.AlbumPhotoRelDTO;
-import svobodavlad.service.mapper.AlbumPhotoRelMapper;
 
 /**
- * Service Implementation for managing {@link AlbumPhotoRel}.
+ * Service Interface for managing {@link svobodavlad.domain.AlbumPhotoRel}.
  */
-@Service
-@Transactional
-public class AlbumPhotoRelService {
-
-    private final Logger log = LoggerFactory.getLogger(AlbumPhotoRelService.class);
-
-    private final AlbumPhotoRelRepository albumPhotoRelRepository;
-
-    private final AlbumPhotoRelMapper albumPhotoRelMapper;
-
-    public AlbumPhotoRelService(AlbumPhotoRelRepository albumPhotoRelRepository, AlbumPhotoRelMapper albumPhotoRelMapper) {
-        this.albumPhotoRelRepository = albumPhotoRelRepository;
-        this.albumPhotoRelMapper = albumPhotoRelMapper;
-    }
-
+public interface AlbumPhotoRelService {
     /**
      * Save a albumPhotoRel.
      *
      * @param albumPhotoRelDTO the entity to save.
      * @return the persisted entity.
      */
-    public AlbumPhotoRelDTO save(AlbumPhotoRelDTO albumPhotoRelDTO) {
-        log.debug("Request to save AlbumPhotoRel : {}", albumPhotoRelDTO);
-        AlbumPhotoRel albumPhotoRel = albumPhotoRelMapper.toEntity(albumPhotoRelDTO);
-        albumPhotoRel = albumPhotoRelRepository.save(albumPhotoRel);
-        return albumPhotoRelMapper.toDto(albumPhotoRel);
-    }
+    AlbumPhotoRelDTO save(AlbumPhotoRelDTO albumPhotoRelDTO);
 
     /**
-     * Update a albumPhotoRel.
+     * Updates a albumPhotoRel.
      *
-     * @param albumPhotoRelDTO the entity to save.
+     * @param albumPhotoRelDTO the entity to update.
      * @return the persisted entity.
      */
-    public AlbumPhotoRelDTO update(AlbumPhotoRelDTO albumPhotoRelDTO) {
-        log.debug("Request to update AlbumPhotoRel : {}", albumPhotoRelDTO);
-        AlbumPhotoRel albumPhotoRel = albumPhotoRelMapper.toEntity(albumPhotoRelDTO);
-        albumPhotoRel = albumPhotoRelRepository.save(albumPhotoRel);
-        return albumPhotoRelMapper.toDto(albumPhotoRel);
-    }
+    AlbumPhotoRelDTO update(AlbumPhotoRelDTO albumPhotoRelDTO);
 
     /**
-     * Partially update a albumPhotoRel.
+     * Partially updates a albumPhotoRel.
      *
      * @param albumPhotoRelDTO the entity to update partially.
      * @return the persisted entity.
      */
-    public Optional<AlbumPhotoRelDTO> partialUpdate(AlbumPhotoRelDTO albumPhotoRelDTO) {
-        log.debug("Request to partially update AlbumPhotoRel : {}", albumPhotoRelDTO);
-
-        return albumPhotoRelRepository
-            .findById(albumPhotoRelDTO.getId())
-            .map(existingAlbumPhotoRel -> {
-                albumPhotoRelMapper.partialUpdate(existingAlbumPhotoRel, albumPhotoRelDTO);
-
-                return existingAlbumPhotoRel;
-            })
-            .map(albumPhotoRelRepository::save)
-            .map(albumPhotoRelMapper::toDto);
-    }
+    Optional<AlbumPhotoRelDTO> partialUpdate(AlbumPhotoRelDTO albumPhotoRelDTO);
 
     /**
      * Get all the albumPhotoRels.
@@ -82,31 +39,20 @@ public class AlbumPhotoRelService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    @Transactional(readOnly = true)
-    public Page<AlbumPhotoRelDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all AlbumPhotoRels");
-        return albumPhotoRelRepository.findAll(pageable).map(albumPhotoRelMapper::toDto);
-    }
+    Page<AlbumPhotoRelDTO> findAll(Pageable pageable);
 
     /**
-     * Get one albumPhotoRel by id.
+     * Get the "id" albumPhotoRel.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    @Transactional(readOnly = true)
-    public Optional<AlbumPhotoRelDTO> findOne(Long id) {
-        log.debug("Request to get AlbumPhotoRel : {}", id);
-        return albumPhotoRelRepository.findById(id).map(albumPhotoRelMapper::toDto);
-    }
+    Optional<AlbumPhotoRelDTO> findOne(Long id);
 
     /**
-     * Delete the albumPhotoRel by id.
+     * Delete the "id" albumPhotoRel.
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
-        log.debug("Request to delete AlbumPhotoRel : {}", id);
-        albumPhotoRelRepository.deleteById(id);
-    }
+    void delete(Long id);
 }
