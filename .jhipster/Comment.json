@@ -29,5 +29,5 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "service": "serviceClass"
+  "service": "serviceImpl"
 }

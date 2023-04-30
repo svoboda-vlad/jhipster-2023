@@ -33,4 +33,4 @@ paginate all with pagination
 
 dto * with mapstruct
 
-service all with serviceClass
+service all with serviceImpl
