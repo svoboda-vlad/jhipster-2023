@@ -33,7 +33,7 @@ import svobodavlad.service.mapper.PhotoMapper;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-public class PhotoResourceIT {
+class PhotoResourceIT {
 
     private static final String DEFAULT_FILE_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FILE_NAME = "BBBBBBBBBB";

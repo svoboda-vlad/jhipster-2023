@@ -17,8 +17,6 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import svobodavlad.repository.UserRepository;
-import svobodavlad.service.MailService;
 import svobodavlad.service.dto.AdminUserDTO;
 import svobodavlad.service.extended.UserService;
 import svobodavlad.web.rest.AccountResource;

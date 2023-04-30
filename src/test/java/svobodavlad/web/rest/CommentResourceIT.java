@@ -29,7 +29,7 @@ import svobodavlad.service.mapper.CommentMapper;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-public class CommentResourceIT {
+class CommentResourceIT {
 
     private static final String DEFAULT_COMMENT_TEXT = "AAAAAAAAAA";
     private static final String UPDATED_COMMENT_TEXT = "BBBBBBBBBB";

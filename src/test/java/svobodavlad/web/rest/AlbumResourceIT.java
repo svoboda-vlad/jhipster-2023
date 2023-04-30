@@ -29,7 +29,7 @@ import svobodavlad.service.mapper.AlbumMapper;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-public class AlbumResourceIT {
+class AlbumResourceIT {
 
     private static final String DEFAULT_ALBUM_NAME = "AAAAAAAAAA";
     private static final String UPDATED_ALBUM_NAME = "BBBBBBBBBB";
