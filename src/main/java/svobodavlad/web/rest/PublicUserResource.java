@@ -12,8 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import svobodavlad.service.UserService;
 import svobodavlad.service.dto.UserDTO;
+import svobodavlad.service.extended.UserService;
 import tech.jhipster.web.util.PaginationUtil;
 
 @RestController

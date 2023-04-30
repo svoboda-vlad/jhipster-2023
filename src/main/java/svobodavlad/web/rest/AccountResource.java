@@ -3,17 +3,18 @@ package svobodavlad.web.rest;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import svobodavlad.domain.User;
+import svobodavlad.repository.UserRepository;
+import svobodavlad.security.SecurityUtils;
 import svobodavlad.service.MailService;
-import svobodavlad.service.UserService;
 import svobodavlad.service.dto.AdminUserDTO;
 import svobodavlad.service.dto.PasswordChangeDTO;
+import svobodavlad.service.extended.UserService;
 import svobodavlad.web.rest.errors.*;
 import svobodavlad.web.rest.vm.KeyAndPasswordVM;
 import svobodavlad.web.rest.vm.ManagedUserVM;
@@ -23,7 +24,6 @@ import svobodavlad.web.rest.vm.ManagedUserVM;
  */
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 public class AccountResource {
 
     private static class AccountResourceException extends RuntimeException {
@@ -35,9 +35,17 @@ public class AccountResource {
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
-    private final UserService userService;
+    private final UserRepository userRepository;
+
+    protected final UserService userService;
 
     private final MailService mailService;
+
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+        this.userRepository = userRepository;
+        this.userService = userService;
+        this.mailService = mailService;
+    }
 
     /**
      * {@code POST  /register} : register the user.
@@ -106,6 +114,17 @@ public class AccountResource {
      */
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody AdminUserDTO userDTO) {
+        String userLogin = SecurityUtils
+            .getCurrentUserLogin()
+            .orElseThrow(() -> new AccountResourceException("Current user login not found"));
+        Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
+        if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
+            throw new EmailAlreadyUsedException();
+        }
+        Optional<User> user = userRepository.findOneByLogin(userLogin);
+        if (!user.isPresent()) {
+            throw new AccountResourceException("User could not be found");
+        }
         userService.updateUser(
             userDTO.getFirstName(),
             userDTO.getLastName(),

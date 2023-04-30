@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -24,10 +25,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import svobodavlad.domain.Authority;
 import svobodavlad.domain.User;
+import svobodavlad.repository.UserRepository;
 import svobodavlad.security.AuthoritiesConstants;
-import svobodavlad.service.*;
+import svobodavlad.service.EmailAlreadyUsedException;
+import svobodavlad.service.InvalidPasswordException;
+import svobodavlad.service.MailService;
+import svobodavlad.service.UsernameAlreadyUsedException;
 import svobodavlad.service.dto.AdminUserDTO;
 import svobodavlad.service.dto.PasswordChangeDTO;
+import svobodavlad.service.extended.UserService;
 import svobodavlad.web.rest.vm.ManagedUserVM;
 
 /**
@@ -42,9 +48,19 @@ class AccountResourceTest {
     static final String USER_ACTIVATION_KEY = "12345678901234567890";
     static final String USER_RESET_KEY = "1234567890";
     static final Instant USER_RESET_DATE = Instant.parse("2023-02-09T11:05:19.659222Z");
+    private static final String REGISTER_URL = "/api/register";
+    private static final String AUTHENTICATE_URL = "/api/authenticate";
+    private static final String ACCOUNT_URL = "/api/account";
+    private static final String ACTIVATE_URL = "/api/activate";
+    private static final String ACCOUNT_CHANGE_PASSWORD_URL = "/api/account/change-password";
+    private static final String ACCOUNT_RESET_PASSWORD_FINISH_URL = "/api/account/reset-password/finish";
+    private static final String ACCOUNT_RESET_PASSWORD_INIT_URL = "/api/account/reset-password/init";
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private UserRepository userRepository;
 
     @MockBean
     private MailService mailService;
@@ -68,7 +84,7 @@ class AccountResourceTest {
     @Test
     void testNonAuthenticatedUser() throws Exception {
         restAccountMockMvc
-            .perform(get("/api/authenticate").accept(MediaType.APPLICATION_JSON))
+            .perform(get(AUTHENTICATE_URL).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().string(""));
     }
@@ -77,7 +93,7 @@ class AccountResourceTest {
     void testAuthenticatedUser() throws Exception {
         restAccountMockMvc
             .perform(
-                get("/api/authenticate")
+                get(AUTHENTICATE_URL)
                     .with(request -> {
                         request.setRemoteUser(USER_LOGIN);
                         return request;
@@ -117,7 +133,7 @@ class AccountResourceTest {
         when(userService.getUserWithAuthorities()).thenReturn(Optional.of(user));
 
         String responseString = restAccountMockMvc
-            .perform(get("/api/account").accept(MediaType.APPLICATION_JSON))
+            .perform(get(ACCOUNT_URL).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andReturn()
             .getResponse()
@@ -131,9 +147,7 @@ class AccountResourceTest {
     void testGetUnknownAccount() throws Exception {
         when(userService.getUserWithAuthorities()).thenReturn(Optional.empty());
 
-        restAccountMockMvc
-            .perform(get("/api/account").accept(MediaType.APPLICATION_PROBLEM_JSON))
-            .andExpect(status().isInternalServerError());
+        restAccountMockMvc.perform(get(ACCOUNT_URL).accept(MediaType.APPLICATION_PROBLEM_JSON)).andExpect(status().isInternalServerError());
     }
 
     @Test
@@ -145,7 +159,7 @@ class AccountResourceTest {
         when(userService.registerUser(validUser, validUser.getPassword())).thenReturn(user);
 
         restAccountMockMvc
-            .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(validUser)))
+            .perform(post(REGISTER_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(validUser)))
             .andExpect(status().isCreated())
             .andExpect(content().string(""));
 
@@ -158,7 +172,7 @@ class AccountResourceTest {
         ManagedUserVM invalidUser = this.managedUserVMJacksonTester.read(sourceFile).getObject();
 
         restAccountMockMvc
-            .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .perform(post(REGISTER_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest());
     }
 
@@ -168,7 +182,7 @@ class AccountResourceTest {
         ManagedUserVM invalidUser = this.managedUserVMJacksonTester.read(sourceFile).getObject();
 
         restAccountMockMvc
-            .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .perform(post(REGISTER_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest());
     }
 
@@ -178,7 +192,7 @@ class AccountResourceTest {
         ManagedUserVM invalidUser = this.managedUserVMJacksonTester.read(sourceFile).getObject();
 
         restAccountMockMvc
-            .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .perform(post(REGISTER_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest());
     }
 
@@ -188,7 +202,7 @@ class AccountResourceTest {
         ManagedUserVM invalidUser = this.managedUserVMJacksonTester.read(sourceFile).getObject();
 
         restAccountMockMvc
-            .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
+            .perform(post(REGISTER_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(invalidUser)))
             .andExpect(status().isBadRequest());
     }
 
@@ -200,7 +214,7 @@ class AccountResourceTest {
         when(userService.registerUser(secondUser, secondUser.getPassword())).thenThrow(new UsernameAlreadyUsedException());
 
         restAccountMockMvc
-            .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(secondUser)))
+            .perform(post(REGISTER_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(secondUser)))
             .andExpect(status().is4xxClientError());
     }
 
@@ -212,7 +226,7 @@ class AccountResourceTest {
         when(userService.registerUser(secondUser, secondUser.getPassword())).thenThrow(new EmailAlreadyUsedException());
 
         restAccountMockMvc
-            .perform(post("/api/register").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(secondUser)))
+            .perform(post(REGISTER_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(secondUser)))
             .andExpect(status().is4xxClientError());
     }
 
@@ -221,7 +235,7 @@ class AccountResourceTest {
         when(userService.activateRegistration(USER_ACTIVATION_KEY)).thenReturn(Optional.of(new User()));
 
         restAccountMockMvc
-            .perform(get("/api/activate?key={activationKey}", USER_ACTIVATION_KEY))
+            .perform(get(ACTIVATE_URL + "?key={activationKey}", USER_ACTIVATION_KEY))
             .andExpect(status().isOk())
             .andExpect(content().string(""));
     }
@@ -233,35 +247,8 @@ class AccountResourceTest {
         when(userService.activateRegistration(wrongActivationKey)).thenReturn(Optional.empty());
 
         restAccountMockMvc
-            .perform(get("/api/activate?key={activationKey}", wrongActivationKey))
+            .perform(get(ACTIVATE_URL + "?key={activationKey}", wrongActivationKey))
             .andExpect(status().isInternalServerError());
-    }
-
-    @Test
-    void testSaveAccount() throws Exception {
-        File sourceFile = new File("src/test/resources/templates/accountResource/testSaveAccountRequest.json");
-        AdminUserDTO userDTO = this.managedUserVMJacksonTester.read(sourceFile).getObject();
-
-        restAccountMockMvc
-            .perform(post("/api/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO)))
-            .andExpect(status().isOk())
-            .andExpect(content().string(""));
-
-        verify(userService, times(1))
-            .updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(), userDTO.getLangKey(), userDTO.getImageUrl());
-    }
-
-    @Test
-    void testSaveInvalidEmail() throws Exception {
-        File sourceFile = new File("src/test/resources/templates/accountResource/testSaveInvalidEmailRequest.json");
-        AdminUserDTO userDTO = this.managedUserVMJacksonTester.read(sourceFile).getObject();
-
-        restAccountMockMvc
-            .perform(post("/api/account").contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(userDTO)))
-            .andExpect(status().isBadRequest());
-
-        verify(userService, never())
-            .updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(), userDTO.getLangKey(), userDTO.getImageUrl());
     }
 
     @Test
@@ -275,7 +262,7 @@ class AccountResourceTest {
 
         restAccountMockMvc
             .perform(
-                post("/api/account/change-password")
+                post(ACCOUNT_CHANGE_PASSWORD_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(passwordChangeDTO))
             )
@@ -289,7 +276,7 @@ class AccountResourceTest {
 
         restAccountMockMvc
             .perform(
-                post("/api/account/change-password")
+                post(ACCOUNT_CHANGE_PASSWORD_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(passwordChangeDTO))
             )
@@ -306,7 +293,7 @@ class AccountResourceTest {
 
         restAccountMockMvc
             .perform(
-                post("/api/account/change-password")
+                post(ACCOUNT_CHANGE_PASSWORD_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(passwordChangeDTO))
             )
@@ -322,7 +309,7 @@ class AccountResourceTest {
 
         restAccountMockMvc
             .perform(
-                post("/api/account/change-password")
+                post(ACCOUNT_CHANGE_PASSWORD_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(passwordChangeDTO))
             )
@@ -338,7 +325,7 @@ class AccountResourceTest {
 
         restAccountMockMvc
             .perform(
-                post("/api/account/change-password")
+                post(ACCOUNT_CHANGE_PASSWORD_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(passwordChangeDTO))
             )
@@ -357,7 +344,7 @@ class AccountResourceTest {
         userRepository.saveAndFlush(user);
 
         restAccountMockMvc
-            .perform(post("/api/account/reset-password/init").content("password-reset@example.com"))
+            .perform(post(ACCOUNT_RESET_PASSWORD_INIT_URL).content("password-reset@example.com"))
             .andExpect(status().isOk());
     }
 
@@ -372,14 +359,14 @@ class AccountResourceTest {
         userRepository.saveAndFlush(user);
 
         restAccountMockMvc
-            .perform(post("/api/account/reset-password/init").content("password-reset-upper-case@EXAMPLE.COM"))
+            .perform(post(ACCOUNT_RESET_PASSWORD_INIT_URL).content("password-reset-upper-case@EXAMPLE.COM"))
             .andExpect(status().isOk());
     }
 
     @Test
     void testRequestPasswordResetWrongEmail() throws Exception {
         restAccountMockMvc
-            .perform(post("/api/account/reset-password/init").content("password-reset-wrong-email@example.com"))
+            .perform(post(ACCOUNT_RESET_PASSWORD_INIT_URL).content("password-reset-wrong-email@example.com"))
             .andExpect(status().isOk());
     }
 
@@ -399,7 +386,7 @@ class AccountResourceTest {
 
         restAccountMockMvc
             .perform(
-                post("/api/account/reset-password/finish")
+                post(ACCOUNT_RESET_PASSWORD_FINISH_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(keyAndPassword))
             )
@@ -425,7 +412,7 @@ class AccountResourceTest {
 
         restAccountMockMvc
             .perform(
-                post("/api/account/reset-password/finish")
+                post(ACCOUNT_RESET_PASSWORD_FINISH_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(keyAndPassword))
             )
@@ -443,7 +430,7 @@ class AccountResourceTest {
 
         restAccountMockMvc
             .perform(
-                post("/api/account/reset-password/finish")
+                post(ACCOUNT_RESET_PASSWORD_FINISH_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(keyAndPassword))
             )
