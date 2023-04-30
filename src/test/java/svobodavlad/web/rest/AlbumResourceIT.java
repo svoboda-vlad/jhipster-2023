@@ -29,7 +29,7 @@ import svobodavlad.service.mapper.AlbumMapper;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class AlbumResourceIT {
+public class AlbumResourceIT {
 
     private static final String DEFAULT_ALBUM_NAME = "AAAAAAAAAA";
     private static final String UPDATED_ALBUM_NAME = "BBBBBBBBBB";
@@ -61,8 +61,7 @@ class AlbumResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Album createEntity(EntityManager em) {
-        Album album = new Album();
-        album.setAlbumName(DEFAULT_ALBUM_NAME);
+        Album album = new Album().albumName(DEFAULT_ALBUM_NAME);
         return album;
     }
 
@@ -73,8 +72,7 @@ class AlbumResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Album createUpdatedEntity(EntityManager em) {
-        Album album = new Album();
-        album.setAlbumName(UPDATED_ALBUM_NAME);
+        Album album = new Album().albumName(UPDATED_ALBUM_NAME);
         return album;
     }
 
@@ -186,7 +184,7 @@ class AlbumResourceIT {
         Album updatedAlbum = albumRepository.findById(album.getId()).get();
         // Disconnect from session so that the updates on updatedAlbum are not directly saved in db
         em.detach(updatedAlbum);
-        updatedAlbum.setAlbumName(UPDATED_ALBUM_NAME);
+        updatedAlbum.albumName(UPDATED_ALBUM_NAME);
         AlbumDTO albumDTO = albumMapper.toDto(updatedAlbum);
 
         restAlbumMockMvc
@@ -308,7 +306,7 @@ class AlbumResourceIT {
         Album partialUpdatedAlbum = new Album();
         partialUpdatedAlbum.setId(album.getId());
 
-        partialUpdatedAlbum.setAlbumName(UPDATED_ALBUM_NAME);
+        partialUpdatedAlbum.albumName(UPDATED_ALBUM_NAME);
 
         restAlbumMockMvc
             .perform(

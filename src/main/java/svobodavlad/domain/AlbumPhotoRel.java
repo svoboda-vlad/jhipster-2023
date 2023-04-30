@@ -3,7 +3,6 @@ package svobodavlad.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -14,10 +13,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "album_photo_rel")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
 public class AlbumPhotoRel implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,6 +33,45 @@ public class AlbumPhotoRel implements Serializable {
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public AlbumPhotoRel id(Long id) {
+        this.setId(id);
+        return this;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Album getAlbum() {
+        return this.album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    public AlbumPhotoRel album(Album album) {
+        this.setAlbum(album);
+        return this;
+    }
+
+    public Photo getPhoto() {
+        return this.photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
+    public AlbumPhotoRel photo(Photo photo) {
+        this.setPhoto(photo);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -55,5 +89,13 @@ public class AlbumPhotoRel implements Serializable {
     public int hashCode() {
         // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
+    }
+
+    // prettier-ignore
+    @Override
+    public String toString() {
+        return "AlbumPhotoRel{" +
+            "id=" + getId() +
+            "}";
     }
 }

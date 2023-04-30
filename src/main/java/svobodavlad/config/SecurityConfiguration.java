@@ -1,6 +1,5 @@
 package svobodavlad.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -14,14 +13,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
-import svobodavlad.security.*;
-import svobodavlad.security.jwt.*;
+import svobodavlad.security.AuthoritiesConstants;
+import svobodavlad.security.jwt.JWTConfigurer;
+import svobodavlad.security.jwt.TokenProvider;
 import tech.jhipster.config.JHipsterProperties;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
-@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final JHipsterProperties jHipsterProperties;
@@ -30,6 +29,18 @@ public class SecurityConfiguration {
 
     private final CorsFilter corsFilter;
     private final SecurityProblemSupport problemSupport;
+
+    public SecurityConfiguration(
+        TokenProvider tokenProvider,
+        CorsFilter corsFilter,
+        JHipsterProperties jHipsterProperties,
+        SecurityProblemSupport problemSupport
+    ) {
+        this.tokenProvider = tokenProvider;
+        this.corsFilter = corsFilter;
+        this.problemSupport = problemSupport;
+        this.jHipsterProperties = jHipsterProperties;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -71,7 +82,8 @@ public class SecurityConfiguration {
         .and()
             .httpBasic()
         .and()
-            .apply(securityConfigurerAdapter());
+            .apply(securityConfigurerAdapter())
+        .and().headers().frameOptions().sameOrigin();
         return http.build();
         // @formatter:on
     }

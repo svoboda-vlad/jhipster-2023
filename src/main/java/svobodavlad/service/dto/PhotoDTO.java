@@ -5,19 +5,11 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 import javax.validation.constraints.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * A DTO for the {@link svobodavlad.domain.Photo} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
 public class PhotoDTO implements Serializable {
 
     private Long id;
@@ -41,6 +33,70 @@ public class PhotoDTO implements Serializable {
 
     private UserDTO owner;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public BigDecimal getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(BigDecimal fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Instant getCreationDateTime() {
+        return creationDateTime;
+    }
+
+    public void setCreationDateTime(Instant creationDateTime) {
+        this.creationDateTime = creationDateTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public UserDTO getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserDTO owner) {
+        this.owner = owner;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -61,5 +117,19 @@ public class PhotoDTO implements Serializable {
     public int hashCode() {
         return Objects.hash(this.id);
     }
+
     // prettier-ignore
+    @Override
+    public String toString() {
+        return "PhotoDTO{" +
+            "id=" + getId() +
+            ", fileName='" + getFileName() + "'" +
+            ", fileSize=" + getFileSize() +
+            ", width=" + getWidth() +
+            ", height=" + getHeight() +
+            ", creationDateTime='" + getCreationDateTime() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", owner=" + getOwner() +
+            "}";
+    }
 }

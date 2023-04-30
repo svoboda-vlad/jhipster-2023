@@ -33,7 +33,7 @@ import svobodavlad.service.mapper.PhotoMapper;
 @IntegrationTest
 @AutoConfigureMockMvc
 @WithMockUser
-class PhotoResourceIT {
+public class PhotoResourceIT {
 
     private static final String DEFAULT_FILE_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FILE_NAME = "BBBBBBBBBB";
@@ -80,13 +80,13 @@ class PhotoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Photo createEntity(EntityManager em) {
-        Photo photo = new Photo();
-        photo.setFileName(DEFAULT_FILE_NAME);
-        photo.setFileSize(DEFAULT_FILE_SIZE);
-        photo.setWidth(DEFAULT_WIDTH);
-        photo.setHeight(DEFAULT_HEIGHT);
-        photo.setCreationDateTime(DEFAULT_CREATION_DATE_TIME);
-        photo.setDescription(DEFAULT_DESCRIPTION);
+        Photo photo = new Photo()
+            .fileName(DEFAULT_FILE_NAME)
+            .fileSize(DEFAULT_FILE_SIZE)
+            .width(DEFAULT_WIDTH)
+            .height(DEFAULT_HEIGHT)
+            .creationDateTime(DEFAULT_CREATION_DATE_TIME)
+            .description(DEFAULT_DESCRIPTION);
         return photo;
     }
 
@@ -97,13 +97,13 @@ class PhotoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Photo createUpdatedEntity(EntityManager em) {
-        Photo photo = new Photo();
-        photo.setFileName(UPDATED_FILE_NAME);
-        photo.setFileSize(UPDATED_FILE_SIZE);
-        photo.setWidth(UPDATED_WIDTH);
-        photo.setHeight(UPDATED_HEIGHT);
-        photo.setCreationDateTime(UPDATED_CREATION_DATE_TIME);
-        photo.setDescription(UPDATED_DESCRIPTION);
+        Photo photo = new Photo()
+            .fileName(UPDATED_FILE_NAME)
+            .fileSize(UPDATED_FILE_SIZE)
+            .width(UPDATED_WIDTH)
+            .height(UPDATED_HEIGHT)
+            .creationDateTime(UPDATED_CREATION_DATE_TIME)
+            .description(UPDATED_DESCRIPTION);
         return photo;
     }
 
@@ -302,12 +302,13 @@ class PhotoResourceIT {
         Photo updatedPhoto = photoRepository.findById(photo.getId()).get();
         // Disconnect from session so that the updates on updatedPhoto are not directly saved in db
         em.detach(updatedPhoto);
-        updatedPhoto.setFileName(UPDATED_FILE_NAME);
-        updatedPhoto.setFileSize(UPDATED_FILE_SIZE);
-        updatedPhoto.setWidth(UPDATED_WIDTH);
-        updatedPhoto.setHeight(UPDATED_HEIGHT);
-        updatedPhoto.setCreationDateTime(UPDATED_CREATION_DATE_TIME);
-        updatedPhoto.setDescription(UPDATED_DESCRIPTION);
+        updatedPhoto
+            .fileName(UPDATED_FILE_NAME)
+            .fileSize(UPDATED_FILE_SIZE)
+            .width(UPDATED_WIDTH)
+            .height(UPDATED_HEIGHT)
+            .creationDateTime(UPDATED_CREATION_DATE_TIME)
+            .description(UPDATED_DESCRIPTION);
         PhotoDTO photoDTO = photoMapper.toDto(updatedPhoto);
 
         restPhotoMockMvc
@@ -407,10 +408,7 @@ class PhotoResourceIT {
         Photo partialUpdatedPhoto = new Photo();
         partialUpdatedPhoto.setId(photo.getId());
 
-        partialUpdatedPhoto.setFileName(UPDATED_FILE_NAME);
-        partialUpdatedPhoto.setWidth(UPDATED_WIDTH);
-        partialUpdatedPhoto.setHeight(UPDATED_HEIGHT);
-        partialUpdatedPhoto.setDescription(UPDATED_DESCRIPTION);
+        partialUpdatedPhoto.fileName(UPDATED_FILE_NAME).width(UPDATED_WIDTH).height(UPDATED_HEIGHT).description(UPDATED_DESCRIPTION);
 
         restPhotoMockMvc
             .perform(
@@ -444,12 +442,13 @@ class PhotoResourceIT {
         Photo partialUpdatedPhoto = new Photo();
         partialUpdatedPhoto.setId(photo.getId());
 
-        partialUpdatedPhoto.setFileName(UPDATED_FILE_NAME);
-        partialUpdatedPhoto.setFileSize(UPDATED_FILE_SIZE);
-        partialUpdatedPhoto.setWidth(UPDATED_WIDTH);
-        partialUpdatedPhoto.setHeight(UPDATED_HEIGHT);
-        partialUpdatedPhoto.setCreationDateTime(UPDATED_CREATION_DATE_TIME);
-        partialUpdatedPhoto.setDescription(UPDATED_DESCRIPTION);
+        partialUpdatedPhoto
+            .fileName(UPDATED_FILE_NAME)
+            .fileSize(UPDATED_FILE_SIZE)
+            .width(UPDATED_WIDTH)
+            .height(UPDATED_HEIGHT)
+            .creationDateTime(UPDATED_CREATION_DATE_TIME)
+            .description(UPDATED_DESCRIPTION);
 
         restPhotoMockMvc
             .perform(

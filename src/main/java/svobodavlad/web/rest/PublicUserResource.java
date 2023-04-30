@@ -2,7 +2,6 @@ package svobodavlad.web.rest;
 
 import java.util.*;
 import java.util.Collections;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,7 +18,6 @@ import tech.jhipster.web.util.PaginationUtil;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 public class PublicUserResource {
 
     private static final List<String> ALLOWED_ORDERED_PROPERTIES = Collections.unmodifiableList(
@@ -29,6 +27,10 @@ public class PublicUserResource {
     private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
 
     private final UserService userService;
+
+    public PublicUserResource(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * {@code GET /users} : get all users with only the public informations - calling this are allowed for anyone.

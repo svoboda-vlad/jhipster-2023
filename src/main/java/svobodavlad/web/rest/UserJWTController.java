@@ -2,7 +2,6 @@ package svobodavlad.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +19,16 @@ import svobodavlad.web.rest.vm.LoginVM;
  */
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 public class UserJWTController {
 
     private final TokenProvider tokenProvider;
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
+    public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
+        this.tokenProvider = tokenProvider;
+        this.authenticationManagerBuilder = authenticationManagerBuilder;
+    }
 
     @PostMapping("/authenticate")
     public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {

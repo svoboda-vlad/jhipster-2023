@@ -1,0 +1,9 @@
+{
+  "login": "test",
+  "password": "test123",
+  "firstName": "john",
+  "lastName": "doe",
+  "email": "invalid",
+  "imageUrl": "http://placehold.it/50x50",
+  "langKey": "en"
+}

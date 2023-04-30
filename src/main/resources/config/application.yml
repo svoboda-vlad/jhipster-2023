@@ -159,6 +159,8 @@ server:
     session:
       cookie:
         http-only: true
+  error:
+    include-stacktrace: never
 
 springdoc:
   show-actuator: true

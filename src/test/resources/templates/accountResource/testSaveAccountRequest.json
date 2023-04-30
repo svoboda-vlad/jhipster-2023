@@ -1,0 +1,8 @@
+{
+  "login": "not-used",
+  "firstName": "firstname",
+  "lastName": "lastname",
+  "email": "save-account@example.com",
+  "imageUrl": "http://placehold.it/50x50",
+  "langKey": "en"
+}

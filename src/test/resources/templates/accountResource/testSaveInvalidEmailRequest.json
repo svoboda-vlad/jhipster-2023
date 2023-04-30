@@ -1,0 +1,8 @@
+{
+  "login": "not-used",
+  "firstName": "firstname",
+  "lastName": "lastname",
+  "email": "invalid email",
+  "imageUrl": "http://placehold.it/50x50",
+  "langKey": "en"
+}

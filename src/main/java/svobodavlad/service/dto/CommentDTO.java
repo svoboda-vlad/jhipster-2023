@@ -3,19 +3,11 @@ package svobodavlad.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.validation.constraints.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * A DTO for the {@link svobodavlad.domain.Comment} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
 public class CommentDTO implements Serializable {
 
     private Long id;
@@ -26,6 +18,38 @@ public class CommentDTO implements Serializable {
     private UserDTO author;
 
     private PhotoDTO photo;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCommentText() {
+        return commentText;
+    }
+
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
+    }
+
+    public UserDTO getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserDTO author) {
+        this.author = author;
+    }
+
+    public PhotoDTO getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(PhotoDTO photo) {
+        this.photo = photo;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -47,5 +71,15 @@ public class CommentDTO implements Serializable {
     public int hashCode() {
         return Objects.hash(this.id);
     }
+
     // prettier-ignore
+    @Override
+    public String toString() {
+        return "CommentDTO{" +
+            "id=" + getId() +
+            ", commentText='" + getCommentText() + "'" +
+            ", author=" + getAuthor() +
+            ", photo=" + getPhoto() +
+            "}";
+    }
 }

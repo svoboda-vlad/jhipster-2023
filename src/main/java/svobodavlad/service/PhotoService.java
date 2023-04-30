@@ -1,7 +1,6 @@
 package svobodavlad.service;
 
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,7 +17,6 @@ import svobodavlad.service.mapper.PhotoMapper;
  */
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class PhotoService {
 
     private final Logger log = LoggerFactory.getLogger(PhotoService.class);
@@ -26,6 +24,11 @@ public class PhotoService {
     private final PhotoRepository photoRepository;
 
     private final PhotoMapper photoMapper;
+
+    public PhotoService(PhotoRepository photoRepository, PhotoMapper photoMapper) {
+        this.photoRepository = photoRepository;
+        this.photoMapper = photoMapper;
+    }
 
     /**
      * Save a photo.

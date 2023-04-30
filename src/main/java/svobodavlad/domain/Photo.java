@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -19,10 +18,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "photo")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
 public class Photo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -71,6 +66,172 @@ public class Photo implements Serializable {
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public Photo id(Long id) {
+        this.setId(id);
+        return this;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFileName() {
+        return this.fileName;
+    }
+
+    public Photo fileName(String fileName) {
+        this.setFileName(fileName);
+        return this;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public BigDecimal getFileSize() {
+        return this.fileSize;
+    }
+
+    public Photo fileSize(BigDecimal fileSize) {
+        this.setFileSize(fileSize);
+        return this;
+    }
+
+    public void setFileSize(BigDecimal fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public Integer getWidth() {
+        return this.width;
+    }
+
+    public Photo width(Integer width) {
+        this.setWidth(width);
+        return this;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return this.height;
+    }
+
+    public Photo height(Integer height) {
+        this.setHeight(height);
+        return this;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Instant getCreationDateTime() {
+        return this.creationDateTime;
+    }
+
+    public Photo creationDateTime(Instant creationDateTime) {
+        this.setCreationDateTime(creationDateTime);
+        return this;
+    }
+
+    public void setCreationDateTime(Instant creationDateTime) {
+        this.creationDateTime = creationDateTime;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public Photo description(String description) {
+        this.setDescription(description);
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<Comment> getComments() {
+        return this.comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        if (this.comments != null) {
+            this.comments.forEach(i -> i.setPhoto(null));
+        }
+        if (comments != null) {
+            comments.forEach(i -> i.setPhoto(this));
+        }
+        this.comments = comments;
+    }
+
+    public Photo comments(Set<Comment> comments) {
+        this.setComments(comments);
+        return this;
+    }
+
+    public Photo addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setPhoto(this);
+        return this;
+    }
+
+    public Photo removeComment(Comment comment) {
+        this.comments.remove(comment);
+        comment.setPhoto(null);
+        return this;
+    }
+
+    public Set<AlbumPhotoRel> getAlbumPhotoRels() {
+        return this.albumPhotoRels;
+    }
+
+    public void setAlbumPhotoRels(Set<AlbumPhotoRel> albumPhotoRels) {
+        if (this.albumPhotoRels != null) {
+            this.albumPhotoRels.forEach(i -> i.setPhoto(null));
+        }
+        if (albumPhotoRels != null) {
+            albumPhotoRels.forEach(i -> i.setPhoto(this));
+        }
+        this.albumPhotoRels = albumPhotoRels;
+    }
+
+    public Photo albumPhotoRels(Set<AlbumPhotoRel> albumPhotoRels) {
+        this.setAlbumPhotoRels(albumPhotoRels);
+        return this;
+    }
+
+    public Photo addAlbumPhotoRel(AlbumPhotoRel albumPhotoRel) {
+        this.albumPhotoRels.add(albumPhotoRel);
+        albumPhotoRel.setPhoto(this);
+        return this;
+    }
+
+    public Photo removeAlbumPhotoRel(AlbumPhotoRel albumPhotoRel) {
+        this.albumPhotoRels.remove(albumPhotoRel);
+        albumPhotoRel.setPhoto(null);
+        return this;
+    }
+
+    public User getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(User user) {
+        this.owner = user;
+    }
+
+    public Photo owner(User user) {
+        this.setOwner(user);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -89,5 +250,18 @@ public class Photo implements Serializable {
         // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
+
     // prettier-ignore
+    @Override
+    public String toString() {
+        return "Photo{" +
+            "id=" + getId() +
+            ", fileName='" + getFileName() + "'" +
+            ", fileSize=" + getFileSize() +
+            ", width=" + getWidth() +
+            ", height=" + getHeight() +
+            ", creationDateTime='" + getCreationDateTime() + "'" +
+            ", description='" + getDescription() + "'" +
+            "}";
+    }
 }

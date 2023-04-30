@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import svobodavlad.domain.User;
-import svobodavlad.repository.UserRepository;
-import svobodavlad.security.SecurityUtils;
 import svobodavlad.service.MailService;
 import svobodavlad.service.UserService;
 import svobodavlad.service.dto.AdminUserDTO;
@@ -36,8 +34,6 @@ public class AccountResource {
     }
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
-
-    private final UserRepository userRepository;
 
     private final UserService userService;
 
@@ -110,17 +106,6 @@ public class AccountResource {
      */
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody AdminUserDTO userDTO) {
-        String userLogin = SecurityUtils
-            .getCurrentUserLogin()
-            .orElseThrow(() -> new AccountResourceException("Current user login not found"));
-        Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
-        if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
-            throw new EmailAlreadyUsedException();
-        }
-        Optional<User> user = userRepository.findOneByLogin(userLogin);
-        if (!user.isPresent()) {
-            throw new AccountResourceException("User could not be found");
-        }
         userService.updateUser(
             userDTO.getFirstName(),
             userDTO.getLastName(),

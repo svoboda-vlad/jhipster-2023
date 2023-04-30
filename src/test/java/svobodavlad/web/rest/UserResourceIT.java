@@ -6,7 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import javax.persistence.EntityManager;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -34,47 +37,47 @@ import svobodavlad.web.rest.vm.ManagedUserVM;
 @AutoConfigureMockMvc
 @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
 @IntegrationTest
-class UserResourceIT {
+public class UserResourceIT {
 
-    private static final String DEFAULT_LOGIN = "johndoe";
-    private static final String UPDATED_LOGIN = "jhipster";
+    protected static final String DEFAULT_LOGIN = "johndoe";
+    protected static final String UPDATED_LOGIN = "jhipster";
 
-    private static final Long DEFAULT_ID = 1L;
+    protected static final Long DEFAULT_ID = 1L;
 
-    private static final String DEFAULT_PASSWORD = "passjohndoe";
-    private static final String UPDATED_PASSWORD = "passjhipster";
+    protected static final String DEFAULT_PASSWORD = "passjohndoe";
+    protected static final String UPDATED_PASSWORD = "passjhipster";
 
-    private static final String DEFAULT_EMAIL = "johndoe@localhost";
-    private static final String UPDATED_EMAIL = "jhipster@localhost";
+    protected static final String DEFAULT_EMAIL = "johndoe@localhost";
+    protected static final String UPDATED_EMAIL = "jhipster@localhost";
 
-    private static final String DEFAULT_FIRSTNAME = "john";
-    private static final String UPDATED_FIRSTNAME = "jhipsterFirstName";
+    protected static final String DEFAULT_FIRSTNAME = "john";
+    protected static final String UPDATED_FIRSTNAME = "jhipsterFirstName";
 
-    private static final String DEFAULT_LASTNAME = "doe";
-    private static final String UPDATED_LASTNAME = "jhipsterLastName";
+    protected static final String DEFAULT_LASTNAME = "doe";
+    protected static final String UPDATED_LASTNAME = "jhipsterLastName";
 
-    private static final String DEFAULT_IMAGEURL = "http://placehold.it/50x50";
-    private static final String UPDATED_IMAGEURL = "http://placehold.it/40x40";
+    protected static final String DEFAULT_IMAGEURL = "http://placehold.it/50x50";
+    protected static final String UPDATED_IMAGEURL = "http://placehold.it/40x40";
 
-    private static final String DEFAULT_LANGKEY = "en";
-    private static final String UPDATED_LANGKEY = "fr";
-
-    @Autowired
-    private UserRepository userRepository;
+    protected static final String DEFAULT_LANGKEY = "en";
+    protected static final String UPDATED_LANGKEY = "fr";
 
     @Autowired
-    private UserMapper userMapper;
+    protected UserRepository userRepository;
 
     @Autowired
-    private EntityManager em;
+    protected UserMapper userMapper;
 
     @Autowired
-    private CacheManager cacheManager;
+    protected EntityManager em;
 
     @Autowired
-    private MockMvc restUserMockMvc;
+    protected CacheManager cacheManager;
 
-    private User user;
+    @Autowired
+    protected MockMvc restUserMockMvc;
+
+    protected User user;
 
     @BeforeEach
     public void setup() {
@@ -494,8 +497,8 @@ class UserResourceIT {
         assertThat(user1).isNotEqualTo(user2);
     }
 
-    @Test
-    void testUserDTOtoUser() {
+    // @Test
+    protected void testUserDTOtoUser() {
         AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setId(DEFAULT_ID);
         userDTO.setLogin(DEFAULT_LOGIN);

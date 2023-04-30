@@ -1,7 +1,6 @@
 package svobodavlad.config;
 
 import javax.servlet.*;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.server.*;
@@ -23,7 +22,6 @@ import tech.jhipster.config.h2.H2ConfigurationHelper;
  * Configuration of web application with Servlet 3.0 APIs.
  */
 @Configuration
-@RequiredArgsConstructor
 public class WebConfigurer implements ServletContextInitializer {
 
     private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
@@ -31,6 +29,11 @@ public class WebConfigurer implements ServletContextInitializer {
     private final Environment env;
 
     private final JHipsterProperties jHipsterProperties;
+
+    public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
+        this.env = env;
+        this.jHipsterProperties = jHipsterProperties;
+    }
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {

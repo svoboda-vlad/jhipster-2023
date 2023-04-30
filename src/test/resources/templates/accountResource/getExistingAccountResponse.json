@@ -1,0 +1,15 @@
+{
+  "id": 1023,
+  "login": "test",
+  "firstName": "john",
+  "lastName": "doe",
+  "email": "john.doe@jhipster.com",
+  "imageUrl": "http://placehold.it/50x50",
+  "activated": true,
+  "langKey": "en",
+  "createdBy": "test",
+  "createdDate": "2023-02-07T22:53:19.432222Z",
+  "lastModifiedBy": "test",
+  "lastModifiedDate": "2023-02-10T13:45:19.659222Z",
+  "authorities": ["ROLE_ADMIN"]
+}

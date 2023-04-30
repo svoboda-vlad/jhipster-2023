@@ -3,19 +3,11 @@ package svobodavlad.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.validation.constraints.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * A DTO for the {@link svobodavlad.domain.Album} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
 public class AlbumDTO implements Serializable {
 
     private Long id;
@@ -24,6 +16,30 @@ public class AlbumDTO implements Serializable {
     private String albumName;
 
     private UserDTO owner;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
+    }
+
+    public UserDTO getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserDTO owner) {
+        this.owner = owner;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -45,5 +61,14 @@ public class AlbumDTO implements Serializable {
     public int hashCode() {
         return Objects.hash(this.id);
     }
+
     // prettier-ignore
+    @Override
+    public String toString() {
+        return "AlbumDTO{" +
+            "id=" + getId() +
+            ", albumName='" + getAlbumName() + "'" +
+            ", owner=" + getOwner() +
+            "}";
+    }
 }

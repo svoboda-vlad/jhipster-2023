@@ -1,12 +1,16 @@
 package svobodavlad.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static svobodavlad.web.rest.AccountResourceIT.TEST_USER_LOGIN;
 
 import java.time.Instant;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +29,6 @@ import svobodavlad.security.AuthoritiesConstants;
 import svobodavlad.service.UserService;
 import svobodavlad.service.dto.AdminUserDTO;
 import svobodavlad.service.dto.PasswordChangeDTO;
-import svobodavlad.service.dto.UserDTO;
 import svobodavlad.web.rest.vm.KeyAndPasswordVM;
 import svobodavlad.web.rest.vm.ManagedUserVM;
 

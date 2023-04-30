@@ -2,19 +2,11 @@ package svobodavlad.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /**
  * A DTO for the {@link svobodavlad.domain.AlbumPhotoRel} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
 public class AlbumPhotoRelDTO implements Serializable {
 
     private Long id;
@@ -22,6 +14,30 @@ public class AlbumPhotoRelDTO implements Serializable {
     private AlbumDTO album;
 
     private PhotoDTO photo;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public AlbumDTO getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(AlbumDTO album) {
+        this.album = album;
+    }
+
+    public PhotoDTO getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(PhotoDTO photo) {
+        this.photo = photo;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -43,5 +59,14 @@ public class AlbumPhotoRelDTO implements Serializable {
     public int hashCode() {
         return Objects.hash(this.id);
     }
+
     // prettier-ignore
+    @Override
+    public String toString() {
+        return "AlbumPhotoRelDTO{" +
+            "id=" + getId() +
+            ", album=" + getAlbum() +
+            ", photo=" + getPhoto() +
+            "}";
+    }
 }
