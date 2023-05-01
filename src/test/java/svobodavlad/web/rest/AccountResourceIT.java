@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -39,7 +38,6 @@ import svobodavlad.web.rest.vm.ManagedUserVM;
 @AutoConfigureMockMvc
 @WithMockUser(value = TEST_USER_LOGIN)
 @IntegrationTest
-@Disabled
 class AccountResourceIT {
 
     static final String TEST_USER_LOGIN = "test";

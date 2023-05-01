@@ -13,12 +13,9 @@ import svobodavlad.web.rest.AccountResource;
 import svobodavlad.web.rest.vm.KeyAndPasswordVM;
 import svobodavlad.web.rest.vm.ManagedUserVM;
 
-/**
- * REST controller for managing the current user's account.
- */
 @Slf4j
 @RestController
-@RequestMapping("/api/v2")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class AccountExtendedResource {
 

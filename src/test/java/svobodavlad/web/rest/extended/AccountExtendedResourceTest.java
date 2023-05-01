@@ -30,7 +30,7 @@ import svobodavlad.web.rest.vm.ManagedUserVM;
 @AutoConfigureMockMvc(addFilters = false)
 class AccountExtendedResourceTest {
 
-    private static final String ACCOUNT_URL = "/api/v2/account";
+    private static final String ACCOUNT_URL = "/api/v1/account";
 
     @MockBean
     private UserService userService;

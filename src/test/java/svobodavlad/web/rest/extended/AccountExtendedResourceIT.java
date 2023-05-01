@@ -44,13 +44,13 @@ import svobodavlad.web.rest.vm.ManagedUserVM;
 class AccountExtendedResourceIT {
 
     static final String TEST_USER_LOGIN = "test";
-    private static final String REGISTER_URL = "/api/v2/register";
-    private static final String AUTHENTICATE_URL = "/api/v2/authenticate";
-    private static final String ACCOUNT_URL = "/api/v2/account";
-    private static final String ACTIVATE_URL = "/api/v2/activate";
-    private static final String ACCOUNT_CHANGE_PASSWORD_URL = "/api/v2/account/change-password";
-    private static final String ACCOUNT_RESET_PASSWORD_FINISH_URL = "/api/v2/account/reset-password/finish";
-    private static final String ACCOUNT_RESET_PASSWORD_INIT_URL = "/api/v2/account/reset-password/init";
+    private static final String REGISTER_URL = "/api/v1/register";
+    private static final String AUTHENTICATE_URL = "/api/v1/authenticate";
+    private static final String ACCOUNT_URL = "/api/v1/account";
+    private static final String ACTIVATE_URL = "/api/v1/activate";
+    private static final String ACCOUNT_CHANGE_PASSWORD_URL = "/api/v1/account/change-password";
+    private static final String ACCOUNT_RESET_PASSWORD_FINISH_URL = "/api/v1/account/reset-password/finish";
+    private static final String ACCOUNT_RESET_PASSWORD_INIT_URL = "/api/v1/account/reset-password/init";
 
     @Autowired
     private UserRepository userRepository;
